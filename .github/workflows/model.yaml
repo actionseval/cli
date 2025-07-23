@@ -1,0 +1,24 @@
+name: model
+
+on: workflow_dispatch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          pip install charset_normalizer colorama defusedxml flake8 flake8-comprehensions flake8-deprecated flake8-mutable flake8-tuple importlib-metadata Jinja2 multidict pip Pygments pyopenssl pytest pytest-cov pytest-httpbin pytest-mock pyyaml requests requests-toolbelt responses rich setuptools twine werkzeug wheel
+
+      - name: Run script
+        run: |
+          make install
+          make test

@@ -1,0 +1,26 @@
+name: hybrid
+
+on: workflow_dispatch
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+        python-version:
+          - '3.12'
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: |
+          make install
+      - run: |
+          make test
+    env:
+      HTTPIE_STDIN_READ_WARN_THRESHOLD: '999'
+      HTTPIE_TEST_WITH_PYOPENSSL: '0'
